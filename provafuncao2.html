@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Gorjeta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Calculadora de Gorjeta</h2>
+        <div class="form-group">
+            <label for="total">Valor total da conta:</label><br>
+            <input type="number" id="total" step="0.01" min="0" placeholder="Digite o valor total">
+        </div>
+        <div class="form-group">
+            <label for="service">Qualidade do serviço:</label><br>
+            <select id="service">
+                <option value="0.2">Bom (20%)</option>
+                <option value="0.15">Regular (15%)</option>
+                <option value="0.1">Ruim (10%)</option>
+            </select>
+        </div>
+        <button id="calculate">Calcular Gorjeta</button>
+        <div class="result" id="tipAmount"></div>
+    </div>
+
+    <script>
+        
+        const calcularGorjeta = (total, qualidade, callback) => {
+            const gorjeta = total * qualidade
+            return callback(gorjeta)
+        }
+        const exibirGorjeta = (gorjeta) => {
+            const tipAmountElement = document.getElementById('tipAmount')
+            tipAmountElement.textContent = `Valor da gorjeta: R$ ${gorjeta.toFixed(2)}`
+        };
+
+        document.getElementById('calculate').addEventListener('click', () => {
+            const totalConta = parseFloat(document.getElementById('total').value)
+            const qualidadeServico = parseFloat(document.getElementById('service').value)
+
+            if (!isNaN(totalConta) && totalConta > 0) {
+                calcularGorjeta(totalConta, qualidadeServico, exibirGorjeta)
+            } else {
+                alert('Por favor, insira um valor válido para o total da conta.')
+            }
+        })
+    </script>
+</body>
+</html>
